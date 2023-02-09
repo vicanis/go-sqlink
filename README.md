@@ -10,8 +10,8 @@ Consider database table:
 
 ```
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
+    `id` int(11) NOT NULL,
+    `name` varchar(255) NOT NULL
 );
 ```
 
@@ -29,26 +29,26 @@ import (
 // tag name should match column name of result row
 // data type should match too
 type User struct {
-	Id   int    `sql:"id"`
-	Name string `sql:"name"`
+    Id   int    `sql:"id"`
+    Name string `sql:"name"`
 }
 
 func Process() {
     // database connection, etc
 
-	rows, err := db.Query("SELECT * FROM `users`")
-	if err != nil {
-		log.Fatal(err)
-	}
+    rows, err := db.Query("SELECT * FROM `users`")
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	defer rows.Close()
+    defer rows.Close()
 
-	users := make([]User, 0)
+    users := make([]User, 0)
 
-	err = sqlink.DecodeRows(rows, &users)
-	if err != nil {
-		log.Fatal(err)
-	}
+    err = sqlink.DecodeRows(rows, &users)
+    if err != nil {
+        log.Fatal(err)
+    }
 
     // other data processing code
 }
