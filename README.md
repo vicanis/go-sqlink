@@ -18,6 +18,14 @@ CREATE TABLE `users` (
 We want to scan rows into slices of struct:
 
 ```
+// package declaration
+
+import (
+    // other imports
+
+    sqlink "github.com/vicanis/go-sqlink"
+)
+
 // tag name should match column name of result row
 // data type should match too
 type User struct {
