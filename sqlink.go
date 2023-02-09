@@ -113,13 +113,17 @@ func DecodeRows(rows *sql.Rows, data any) (err error) {
 
 				switch field.Type.Kind() {
 				case reflect.Int:
-					fallthrough
-				case reflect.Int64:
 					switch elem.Kind() {
 					case reflect.Int32:
-						fallthrough
-					case reflect.Int64:
 						i := int(elem.Int())
+						dataStruct.Elem().Field(j).Set(reflect.ValueOf(i))
+						continue fieldloop
+					}
+
+				case reflect.Int64:
+					switch elem.Kind() {
+					case reflect.Int64:
+						i := elem.Int()
 						dataStruct.Elem().Field(j).Set(reflect.ValueOf(i))
 						continue fieldloop
 					}
