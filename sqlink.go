@@ -63,6 +63,10 @@ func DecodeRows(rows *sql.Rows, data any) (err error) {
 			case reflect.Int32:
 				var i int32
 				row = append(row, &i)
+			case reflect.Int64:
+				var i int64
+				row = append(row, &i)
+
 			case reflect.Slice:
 				elemType := col.ScanType().Elem()
 
@@ -75,9 +79,11 @@ func DecodeRows(rows *sql.Rows, data any) (err error) {
 				}
 
 				fallthrough
+
 			case reflect.String:
 				var i string
 				row = append(row, &i)
+
 			default:
 				err = fmt.Errorf(
 					"column data type %s is not supported yet",
@@ -109,10 +115,13 @@ func DecodeRows(rows *sql.Rows, data any) (err error) {
 				case reflect.Int:
 					switch elem.Kind() {
 					case reflect.Int32:
+						fallthrough
+					case reflect.Int64:
 						i := int(elem.Int())
 						dataStruct.Elem().Field(j).Set(reflect.ValueOf(i))
 						continue fieldloop
 					}
+
 				case reflect.String:
 					switch elem.Kind() {
 					case reflect.String:
