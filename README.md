@@ -1,10 +1,10 @@
 # go-sqlink
 
-DecodeRows decodes SQL result rows into slice of structs.
+_DecodeRows_ function decodes SQL result rows into slice of structs.
 It scans struct field tags to match column name in result row.
 Struct field data type should match column value data type too.
 
-Usage:
+## Usage:
 
 Consider database table:
 
