@@ -72,8 +72,8 @@ func DecodeRows(rows *sql.Rows, data any) (err error) {
 
 				if elemType.Kind() != reflect.Uint8 {
 					err = fmt.Errorf(
-						"column data type is slice with element data type %s, which is not supported yet",
-						elemType.Kind(),
+						"column %s data type is slice with element data type %s, which is not supported yet",
+						col.Name(), elemType.Kind(),
 					)
 					return
 				}
@@ -86,8 +86,8 @@ func DecodeRows(rows *sql.Rows, data any) (err error) {
 
 			default:
 				err = fmt.Errorf(
-					"column data type %s is not supported yet",
-					col.ScanType().Kind(),
+					"column %s data type %s is not supported yet",
+					col.Name(), col.ScanType().Kind(),
 				)
 				return
 			}
@@ -137,9 +137,8 @@ func DecodeRows(rows *sql.Rows, data any) (err error) {
 				}
 
 				err = fmt.Errorf(
-					"data type mismatch: struct field %s and column %s",
-					field.Type.Kind(),
-					elem.Kind(),
+					"field %s: data type mismatch: struct field %s and column %s",
+					field.Name, field.Type.Kind(), elem.Kind(),
 				)
 				return
 			}
